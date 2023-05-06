@@ -1,0 +1,18 @@
+{
+  "name": "vaulthuntersnav",
+  "version": "1.0.0",
+  "description": "webapp for vault hunters map",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "vaulthuntersnav"
+  },
+  "author": "keldi",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}
