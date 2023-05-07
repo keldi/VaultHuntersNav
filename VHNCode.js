@@ -9,6 +9,12 @@ function funStartIt() {
 	oGridData.initialize(-5, 5, -5, 5);
 	oGridData.addCell(0, 6);
 	oGridData.addCell(-2, -6);
+	oGridData.addCell(0, -10);
+	oGridData.addCell(0, -9);
+	oGridData.addCell(1, -9);
+	oGridData.addCell(1, -8);
+	oGridData.addCell(1, -7);
+	oGridData.addCell(1, -6);
 }
 
 
@@ -163,9 +169,12 @@ function GridData() {
 		oTmp.classList.add(...this.c_asNodeClasses);
 		oTmp.classList.add(...this.c_asMapClasses);
 		oTmp.style.border = "1px solid black";
+		oTmp.gridRowNum = parseInt(viR);
+		oTmp.gridColNum = parseInt(viC);
 		//oTmp.style.height = "50px";
 		//oTmp.style.width = "50px";
 		oTmp.id = this.gNN(viR, viC);
+		oTmp.onclick = this.passthroughClick.bind(this);//Bind lets me use object functions
 		oTmp.appendChild(document.createTextNode("" + viR + "," + viC));
 		return oTmp;
 	};
@@ -182,7 +191,22 @@ function GridData() {
 		while (oBase.firstChild) { oBase.removeChild(oBase.firstChild); }
 		oBase.appendChild(oTmp);
 		return oTmp;
+	};
+
+	this.passthroughClick = function (event) {
+		//oGridData.printLog("passthroughClick[" + event + "]");
+		oGridData.nodeClick(event);
 	}
+
+	this.nodeClick = function (event) {
+		//this.printLog("nodeClick e.cT[" + event.currentTarget + "]  e.cT.id[" + event.currentTarget.id + "]");
+		this.printLog("nodeClick e.gRN[" + event.currentTarget.gridRowNum + "]  e.cT.gCN[" + event.currentTarget.gridColNum + "]");
+	};
+
+	this.printLog = function (vsLog) {
+		var oD = gel("txtDebug");
+		oD.value = oD.value + "\n" + vsLog;
+	};
 }
 
 function gel(vsEl) {
