@@ -4,6 +4,7 @@ var c_sGridFrame = "divMapGrid";
 var oGridData;
 
 function funStartIt() {
+	gel("divOutput").innerHTML("startit");
 	oGridData = new GridData();
 	oGridData.initialize(-5, 5, -5, 5);
 	oGridData.addCell(0, 6);
@@ -12,6 +13,7 @@ function funStartIt() {
 
 
 function funAddCell() {
+	gel("divOutput").innerHTML("funAddCell");
 	oGridData.addCell(parseInt(gel("txtAddRow").value), parseInt(gel("txtAddCol").value));
 }
 
@@ -34,6 +36,7 @@ function GridData() {
 
 	//Initialize grid data.
 	this.initialize = function (viRMin, viRMax, viCMin, viCMax) {
+		gel("divOutput").innerHTML("initialize");
 		if (gel("txtGroup").value == "true") {this.bootstrap = true;}
 		if (gel("txtGroup").value == "false") {this.bootstrap = false;}
 		this.iCMin = viCMin;
@@ -125,6 +128,7 @@ function GridData() {
 	};
 
 	this.addCell = function (viR, viC) {
+		gel("divOutput").innerHTML("addCell");
 		var oTmp = this.makeCol(viR, viC);
 		if (oTmp) {
 			var oFrame = gel(c_sGridFrame);
