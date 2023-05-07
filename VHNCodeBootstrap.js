@@ -5,24 +5,16 @@ var oGridData;
 
 function funStartIt() {
 	oGridData = new GridData();
-	oGridData.initialize(-5, 5, -5, 5);
-	oGridData.addCell(0, 6);
-	oGridData.addCell(-2, -6);
+	oGridData.initialize(0, 11, 0, 11);
 }
 
 
-function funAddCell() {
-	oGridData.addCell(parseInt(gel("txtAddRow").value), parseInt(gel("txtAddCol").value));
-}
 
 function GridData() {
 	this.iCMin = 0;
 	this.iCMax = 0;
 	this.iRMin = 0;
 	this.iRMax = 0;
-	this.iCTot = 0;
-	this.iRTot = 0;
-	this.iZero = 25;
 	this.aoRows = [];
 	this.c_sMapPrefix = "mapGrid";
 	this.c_asMapClasses = ["mapGrid", "flex-nowrap"];
@@ -40,18 +32,16 @@ function GridData() {
 		this.iCMax = viCMax;
 		this.iRMin = viRMin;
 		this.iRMax = viRMax;
-		this.iCTot = viCMax - viCMin;
-		this.iRTot = viRMax - viRMin;
 		/* If re-initializing, nuke - not doing this yet. */
 		this.resetBase();
 		var oFrame = gel(c_sGridFrame);
 
 
 		var oCurR, oCurC, sCurR, sCurC, oPar;
-		//oCurR = this.makeRow(0);
-		//oFrame.appendChild(oCurR);
-		//oCurC = this.makeCol(0, 0);
-		//oFrame.appendChild(oCurC);
+		oCurR = this.makeRow(0);
+		oFrame.appendChild(oCurR);
+		oCurC = this.makeCol(0, 0);
+		oCurR.appendChild(oCurC);
 		
 		this.setGrid(viRMin, viRMax, viCMin, viCMax);
 	};
@@ -59,10 +49,9 @@ function GridData() {
 	//Adjust current grid based on new size.
 	this.setGrid = function (viRMin, viRMax, viCMin, viCMax) {
 		var oCurR, oCurC, sCurR, sCurC, oPar, oTemp;
-		var oFrame = gel(c_sGridFrame);
 		for (var iRow = viRMin; iRow <= viRMax; iRow++) {
 			console.log("Row build: " + iRow);
-			/*sCurR = this.gNR(iRow);
+			sCurR = this.gNR(iRow);
 			oCurR = gel(sCurR);
 			if (!oCurR) {
 				oCurR = this.makeRow(iRow);
@@ -72,7 +61,7 @@ function GridData() {
 					oTemp = gel(this.gNR(iRow - 1));
 					if (oTemp) { oTemp.parentNode.insertBefore(oCurR, oTemp.nextSibling); }
 				}
-			}*/
+			}
 			//Row setup finished.
 			for (var iCol = viCMin; iCol <= viCMax; iCol++) {
 				console.log("Col build: " + iRow + ", " + iCol);
@@ -80,7 +69,27 @@ function GridData() {
 				oCurC = gel(sCurC);
 				if (!oCurC) {
 					oCurC = this.makeCol(iRow, iCol);
-					oFrame.appendChild(oCurC);
+					oTemp = gel(this.gNR(iRow));
+					console.log("Exists? " + this.gNR(iRow) + " " + (oTemp) + " hcn[" + oTemp.hasChildNodes() + "]");
+					if (oTemp.hasChildNodes() == false) {
+						console.log("Exists? " + this.gNR(iRow) + " " + (oTemp));
+						oTemp.appendChild(oCurC);
+						continue;
+					}
+					oTemp = gel(this.gNC(iRow, iCol + 1));
+					if (oTemp) { 
+						oTemp.parentNode.insertBefore(oCurC, oTemp); 
+					}
+					else {
+						oTemp = gel(this.gNC(iRow, iCol - 1));
+
+						if (oTemp) {
+							oTemp.parentNode.insertBefore(oCurC, oTemp.nextSibling);
+						}
+						else {
+							console.log("Col Err: " + iRow + ", " + iCol);
+						}
+					}
 				}
 			}
 		}
@@ -116,40 +125,22 @@ function GridData() {
 	};
 
 	this.makeRow = function (viR) {
-		/*var oTmp = document.createElement("div");
+		var oTmp = document.createElement("div");
 		if (this.bootstrap == true) {oTmp.classList.add("row");}
 		oTmp.classList.add(...this.c_asRowClasses);
 		oTmp.classList.add(...this.c_asMapClasses);
 		oTmp.id = this.gNR(viR);
-		return oTmp;*/
+		return oTmp;
 	};
 
-	this.addCell = function (viR, viC) {
-		var oTmp = this.makeCol(viR, viC);
-		if (oTmp) {
-			var oFrame = gel(c_sGridFrame);
-			oFrame.appendChild(oTmp);
-		}
-	}
-
 	this.makeCol = function (viR, viC) {
-		if (gel(this.gNC(viR, viC))) {
-			console.log("this.makeCol: already exists for [" + viR + "," + viC + "]");
-			return false;
-		}
-		console.log("makeCol:a " + viR + ", " + viC);
+		console.log("makeCol: " + viR + ", " + viC);
 		var oTmp = document.createElement("div");
 		if (this.bootstrap == true) {oTmp.classList.add("col");}
 		oTmp.classList.add(...this.c_asColClasses);
 		oTmp.classList.add(...this.c_asMapClasses);
-		console.log("makeCol:b " + viR + ", " + viC);
-		oTmp.style.gridColumn = viC + this.iZero;
-		oTmp.style.gridRow = viR + this.iZero;
-		//oTmp.style.gridArea = viR + " " + viC + " auto auto";
 		oTmp.id = this.gNC(viR, viC);
-		console.log("makeCol:c " + viR + ", " + viC + " [" + oTmp + "] classList[" + oTmp.classList + "]");
 		oTmp.appendChild(this.makeNode(viR, viC));
-		console.log("makeCol:d " + viR + ", " + viC + " [" + oTmp + "] classList[" + oTmp.classList + "]");
 		return oTmp;
 	};
 
@@ -162,7 +153,7 @@ function GridData() {
 		//oTmp.style.height = "50px";
 		//oTmp.style.width = "50px";
 		oTmp.id = this.gNN(viR, viC);
-		oTmp.appendChild(document.createTextNode("" + viR + "," + viC));
+		oTmp.appendChild(document.createTextNode(this.gNC(viR, viC)));
 		return oTmp;
 	};
 
@@ -172,7 +163,6 @@ function GridData() {
 		oTmp.classList.add(...this.c_asContainerClasses);
 		oTmp.classList.add(...this.c_asMapClasses);
 		oTmp.classList.add("text-center");
-		
 		oTmp.id = "divMapGrid";
 		var oBase = gel("divMapBase");
 		while (oBase.firstChild) { oBase.removeChild(oBase.firstChild); }
