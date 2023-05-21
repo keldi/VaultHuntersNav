@@ -36,6 +36,18 @@ function funAddCell() {
 	oGridData.addCell(parseInt(gel("txtAddRow").value), parseInt(gel("txtAddCol").value));
 }
 
+function funSwitchPlayer() {
+	var sPlayer = String(gel("txtSwitchPlayer").value).toLowerCase();
+	if (!oGridData.aoPlayers[sPlayer]) {
+		oGridData.addPlayer(sPlayer);
+		var eSelColor = gel("selPlayerColor");
+		oGridData.aoPlayers[sPlayer].sColor = String(eSelColor.options[eSelColor.selectedIndex].value);
+	}
+	else {
+	}
+	oGridData.sThisPlayer = String(gel("txtSwitchPlayer").value);
+}
+
 function GridData() {
 	this.iCMin = 0;
 	this.iCMax = 0;
@@ -86,18 +98,18 @@ function GridData() {
 		gel("divActionW").onclick = this.passthroughActionClick.bind(this);
 		gel("divActionC").onclick = this.passthroughActionClick.bind(this);
 		
-		this.sThisPlayer = "YOU";
+		this.sThisPlayer = String(txtUsername.value);
 		this.addPlayer(this.sThisPlayer);
 		
 
 	};
 
 	this.addPlayer = function (vsPlayer) {
-		this.aoPlayers[String(vsPlayer)] = {name:String(vsPlayer), locX:0, locY:0, sColor:"playerRed", dUpdate:new Date()};
+		this.aoPlayers[String(vsPlayer).toLowerCase()] = {name:String(vsPlayer), locX:0, locY:0, sColor:"playerRed", dUpdate:new Date()};
 	};
 
 	this.movePlayer = function (vsPlayer, vX, vY) {
-		var oPl = this.aoPlayers[String(vsPlayer)];
+		var oPl = this.aoPlayers[String(vsPlayer).toLowerCase()];
 
 		//Initialize room if doesn't exist
 		var sNextNN = this.gNN(parseInt(vX), parseInt(vY));
@@ -227,11 +239,11 @@ function GridData() {
 		oTmp.id = "divMapGrid";
 		oTmp.style.setProperty("--node-size", "50px");
 		var oBase = gel("divMapBase");
-		var oPreserve = oBase.removeChild(gel("divNodeActions"));
+		//var oPreserve = oBase.removeChild(gel("divNodeActions"));
 		
 		while (oBase.firstChild) { oBase.removeChild(oBase.firstChild); }
 		
-		oBase.appendChild(oPreserve);
+		//oBase.appendChild(oPreserve);
 		oBase.appendChild(oTmp);
 		return oTmp;
 	};
