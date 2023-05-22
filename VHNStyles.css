@@ -28,14 +28,15 @@
 .mapGridNode {
     width: var(--node-size, 50);
     aspect-ratio: 1;
-    border: 1px solid black;
+    border: 2px solid black;
 }
 
 .nodeCenter {
-    border:2px solid black;
+    border:2px inset black;
+    background-color: plum;
 }
 
-.divNodeActions {
+.divNodeActionsFloat {
     display:grid;
     position:absolute;
     float:right;
@@ -45,9 +46,17 @@
     border: 1px solid red;
 }
 
+.divNodeActions {
+    display:grid;
+    z-index:42;
+    height:150px;
+    width:150px;
+    border: 1px solid red;
+}
+
 .divNodeActions .actionNode {
     aspect-ratio: 1;
-    width: 45px;
+    width: 49px;
     border: 1px solid blue;
     padding: 0%;
     margin: 0%;
@@ -71,4 +80,18 @@
 
 .playerPurple {
     background-color: purple;
+}
+
+
+.exploreW {
+    border-left: 1px dotted grey;
+}
+.exploreE {
+    border-right: 1px dotted grey;
+}
+.exploreN {
+    border-top: 1px dotted grey;
+}
+.exploreS {
+    border-bottom: 1px dotted grey;
 }

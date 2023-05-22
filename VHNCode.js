@@ -8,7 +8,7 @@ function funStartIt() {
 	oGridData = new GridData();
 	
 	oGridData.initialize(0, 0, 0, 0);
-	oGridData.movePlayer(oGridData.sThisPlayer, 0, 0);
+	oGridData.movePlayer(oGridData.sThisPlayer, "X", 0, 0);
 
 	/*
 	oGridData.initialize(-5, 5, -5, 5);
@@ -108,7 +108,7 @@ function GridData() {
 		this.aoPlayers[String(vsPlayer).toLowerCase()] = {name:String(vsPlayer), locX:0, locY:0, sColor:"playerRed", dUpdate:new Date()};
 	};
 
-	this.movePlayer = function (vsPlayer, vX, vY) {
+	this.movePlayer = function (vsPlayer, vDir, vX, vY) {
 		var oPl = this.aoPlayers[String(vsPlayer).toLowerCase()];
 
 		//Initialize room if doesn't exist
@@ -123,11 +123,20 @@ function GridData() {
 		//TODO:  Remove indicator from node
 		var sStartNN = this.gNN(oPl.locX, oPl.locY);
 		gel(sStartNN).classList.remove(oPl.sColor);
+
+		var sBack;
+		if (vDir == "N") {sBack = "S";}
+		if (vDir == "S") {sBack = "N";}
+		if (vDir == "W") {sBack = "E";}
+		if (vDir == "E") {sBack = "W";}
+		if (vDir != "X") {gel(sStartNN).classList.add("explore" + vDir);}
+
 		//TODO: Add indicator to Node
 		oPl.locX = parseInt(vX);
 		oPl.locY = parseInt(vY);
 		sStartNN = this.gNN(oPl.locX, oPl.locY);
 		gel(sStartNN).classList.add(oPl.sColor);
+		if (vDir != "X") {gel(sStartNN).classList.add("explore" + sBack);}
 		if (vsPlayer == this.sThisPlayer) {this.iSelectedLoc = [vX, vY];}
 	}
 
@@ -271,12 +280,12 @@ function GridData() {
 		//gel("divNAOutput").innerHTML = "e.gRN[" + event.currentTarget.gridRowNum + "]  e.cT.gCN[" + event.currentTarget.gridColNum + "]";
 		//gel("divNodeActions").classList.remove("hidden");
 		if (event.currentTarget.id == "divActionC") {
-			this.movePlayer(this.sThisPlayer, this.iSelectedLoc[0], this.iSelectedLoc[1]);
+			this.movePlayer(this.sThisPlayer, "X", this.iSelectedLoc[0], this.iSelectedLoc[1]);
 		}
-		if (event.currentTarget.id == "divActionN") {this.movePlayer(this.sThisPlayer, this.iSelectedLoc[0]-1, this.iSelectedLoc[1]);}
-		if (event.currentTarget.id == "divActionS") {this.movePlayer(this.sThisPlayer, this.iSelectedLoc[0]+1, this.iSelectedLoc[1]);}
-		if (event.currentTarget.id == "divActionW") {this.movePlayer(this.sThisPlayer, this.iSelectedLoc[0], this.iSelectedLoc[1]-1);}
-		if (event.currentTarget.id == "divActionE") {this.movePlayer(this.sThisPlayer, this.iSelectedLoc[0], this.iSelectedLoc[1]+1);}
+		if (event.currentTarget.id == "divActionN") {this.movePlayer(this.sThisPlayer, "N", this.iSelectedLoc[0]-1, this.iSelectedLoc[1]);}
+		if (event.currentTarget.id == "divActionS") {this.movePlayer(this.sThisPlayer, "S", this.iSelectedLoc[0]+1, this.iSelectedLoc[1]);}
+		if (event.currentTarget.id == "divActionW") {this.movePlayer(this.sThisPlayer, "W", this.iSelectedLoc[0], this.iSelectedLoc[1]-1);}
+		if (event.currentTarget.id == "divActionE") {this.movePlayer(this.sThisPlayer, "E", this.iSelectedLoc[0], this.iSelectedLoc[1]+1);}
 
 	};
 
