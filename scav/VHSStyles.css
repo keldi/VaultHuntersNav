@@ -1,0 +1,71 @@
+.divMain {
+    display:grid;
+    width: fit-content;
+}
+
+.divHeader {
+    display:grid;
+    width: 100%;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+}
+
+
+.itemRow {
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    
+    align-items:center;
+    border: dashed 1px black;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+.itemRow .RowDescription {
+    align-self: center;
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+.itemRow .RowDescription img {
+    width:30px;
+    height:30px;
+    align-self: center;
+}
+
+.completedZone .itemRow {
+    opacity:0.5;
+}
+
+.completedZone .itemRow .RowDescription .itemText {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.hiddenZone .itemRow {
+    display:none;
+}
+
+.activeZone .itemRow {
+    /*background-color: palegreen;*/
+}
+
+.itemText {
+    font-size: smaller;
+    align-self: center;
+    white-space: nowrap;
+}
+
+.StatusGroup input {
+    max-width: 5em;
+    height: 30px;
+    text-align: center;
+}
+
+.aaStatusGroup button {
+    width: 5px;
+}
+
+.hidden {
+    display:none;
+}

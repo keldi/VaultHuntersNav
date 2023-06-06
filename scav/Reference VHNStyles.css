@@ -1,0 +1,97 @@
+.mapBase {
+    
+}
+
+.hidden {
+    display:none;
+}
+
+.mapGrid {
+    padding: 0%;
+    margin: 0%;
+}
+
+.mapGridContainer {
+    display:grid;
+    width: fit-content;
+    place-self:center;
+}
+
+.mapGridRow {
+    
+}
+
+.mapGridCol {
+    
+}
+
+.mapGridNode {
+    width: var(--node-size, 50);
+    aspect-ratio: 1;
+    border: 2px solid black;
+}
+
+.nodeCenter {
+    border:2px inset black;
+    background-color: plum;
+}
+
+.divNodeActionsFloat {
+    display:grid;
+    position:absolute;
+    float:right;
+    z-index:42;
+    height:150px;
+    width:150px;
+    border: 1px solid red;
+}
+
+.divNodeActions {
+    display:grid;
+    z-index:42;
+    height:150px;
+    width:150px;
+    border: 1px solid red;
+}
+
+.divNodeActions .actionNode {
+    aspect-ratio: 1;
+    width: 49px;
+    border: 1px solid blue;
+    padding: 0%;
+    margin: 0%;
+}
+
+.playerRed {
+    background-color: red;
+}
+
+.playerBlue {
+    background-color: blue;
+}
+
+.playerYellow {
+    background-color: yellow;
+}
+
+.playerGreen {
+    background-color: green;
+}
+
+.playerPurple {
+    background-color: purple;
+}
+
+
+.exploreW {
+    border-left: 1px dotted grey;
+}
+.exploreE {
+    border-right: 1px dotted grey;
+}
+.exploreN {
+    border-top: 1px dotted grey;
+}
+.exploreS {
+    border-bottom: 1px dotted grey;
+}
