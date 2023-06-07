@@ -173,14 +173,15 @@ function funStructureRow(veRow, vsDesc) {
 	eDesc.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = vsDesc;
 
 	//Associate the onclick bindings!
-	var oCur = eCollect.firstElementChild;
-	oCur.id = "txtCount_" + sRowChest + "_" + sRowItem;
-	oCur = oCur.nextElementSibling;
+	var oCur;
+	oCur = eCollect.firstElementChild;
 	oCur.id = "btnMinus_" + sRowChest + "_" + sRowItem;
 	oCur.scavBtn = "minus";
 	oCur.scavIdent = sRowIdent;
 	oCur.scavRow = veRow;
 	oCur.onclick = funCountClickPassthrough.bind(oCur);
+	oCur = oCur.nextElementSibling;
+	oCur.id = "txtCount_" + sRowChest + "_" + sRowItem;
 	oCur = oCur.nextElementSibling;
 	oCur.id = "btnPlus_" + sRowChest + "_" + sRowItem;
 	oCur.scavBtn = "plus";
