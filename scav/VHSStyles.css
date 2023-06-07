@@ -1,3 +1,7 @@
+body {
+    touch-action: manipulation;
+}
+
 .divMain {
     display:grid;
     width: fit-content;
@@ -57,7 +61,7 @@
 }
 
 .StatusGroup input {
-    max-width: 5em;
+    max-width: 3.5em;
     height: 30px;
     text-align: center;
 }
