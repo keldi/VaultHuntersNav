@@ -73,3 +73,32 @@ body {
 .hidden {
     display:none;
 }
+
+.totalZone .completedTotal {
+    opacity:0.2;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.totalZone {
+    display:grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    
+    align-items:center;
+    border: dashed 1px black;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+.totalZone .totalNode {
+    border: dashed 1px black;
+    align-self: center;
+    white-space: nowrap;
+}
+
+.totalZone img {
+    width:30px;
+    height:30px;
+    align-self: center;
+}
