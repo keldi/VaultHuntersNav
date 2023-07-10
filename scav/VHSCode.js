@@ -27,7 +27,7 @@ function funCountClick (event) {
 	var sTargBtn = oCurTarg.scavBtn;
 	var iMod = (sTargBtn=="plus"?1:-1);
 	var iIndex = oCurTarg.scavRow.scavIndex;
-	
+
 	//alert("funCountClick[" + sTargIdent + "][" + sTargBtn + "][" + oCurTarg.scavRow + "][" + g_aItemData[oCurTarg.scavRow.scavIndex][2] + "]\n");
 
 
@@ -123,7 +123,7 @@ function funSortRows() {
 		lblSort.innerHTML = "Sort (Type/<b>Name</b>)";
 		g_aItemData.sort(funRowCompareNames);
 	}
-	
+
 	if (g_sMode == "Active") {
 		funUpdateAllRows();
 	}
@@ -133,7 +133,10 @@ function funSortRows() {
 }
 
 function funRowCompareChests(vaA, vaB) {
-	if (vaA[0] == vaB[0]) {return (funRowCompareNames(vaA, vaB));}
+	if (vaA[0] == vaB[0]) {
+		if (vaA[1] < vaB[1]) {return -1;} else {return 1;}
+		//return (funRowCompareNames(vaA, vaB));
+	}
 	if (g_iChestOrder.indexOf(vaA[0]) < g_iChestOrder.indexOf(vaB[0])) {return -1;} else {return 1;}
 }
 
@@ -174,9 +177,9 @@ function funCountTotalDisplay() {
 function funGetRowStatus(viIn) {
 	if (g_aItemData[viIn][g_iIndGoal] == 0)
 	{return "Hidden";}
-	else if (g_aItemData[viIn][g_iIndCount] < g_aItemData[viIn][g_iIndGoal]) 
+	else if (g_aItemData[viIn][g_iIndCount] < g_aItemData[viIn][g_iIndGoal])
 	{return "Active";}
-	else if (g_aItemData[viIn][g_iIndCount] >= g_aItemData[viIn][g_iIndGoal]) 
+	else if (g_aItemData[viIn][g_iIndCount] >= g_aItemData[viIn][g_iIndGoal])
 	{return "Completed";}
 }
 
@@ -236,12 +239,12 @@ function funInitializeRows() {
 	var eNewRow;
 	var eSource = gel("divRow_X_RX");
 	var ePrepZone = gel("divPrepZone");
-	
+
 	ePrepZone.scavZone = "Prep";
 	gel("divActiveZone").scavZone = "Active";
 	gel("divCompletedZone").scavZone = "Completed";
 	gel("divHiddenZone").scavZone = "Hidden";
-	
+
 	for (var iCtr = 0; iCtr < g_aItemData.length; iCtr++) {
 		eNewRow = funMakeRow(eSource, g_aItemData[iCtr][0], g_aItemData[iCtr][1], g_aItemData[iCtr][2], iCtr);
 		ePrepZone.appendChild(eNewRow);
